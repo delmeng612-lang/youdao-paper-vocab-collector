@@ -51,12 +51,10 @@ function wordFromResultUrl(urlValue) {
   }
 }
 
-function isYoudaoResult(urlValue) {
+function isYoudaoPage(urlValue) {
   try {
     const url = new URL(urlValue);
-    if (url.protocol !== "https:") return false;
-    if (!["youdao.com", "dict.youdao.com", "www.youdao.com"].includes(url.hostname)) return false;
-    return url.pathname === "/result" || url.pathname === "/result/" || /^\/w\/(?:eng\/)?[^/]+\/?$/.test(url.pathname);
+    return url.protocol === "https:" && ["youdao.com", "dict.youdao.com", "www.youdao.com"].includes(url.hostname);
   } catch {
     return false;
   }
@@ -296,9 +294,10 @@ async function dispatch(message, sender) {
     }
 
     case "CAPTURE_WORD": {
-      if (!sender.tab || !isYoudaoResult(sender.url)) return { status: "inactive" };
+      if (!sender.tab || sender.frameId !== 0 || !isYoudaoPage(sender.url)) return { status: "inactive" };
       const word = cleanEntry(message.word);
-      if (!word || wordFromResultUrl(sender.url) !== word) return { status: "inactive" };
+      // After a same-document navigation, sender.url can still refer to the initial page.
+      if (!word || wordFromResultUrl(sender.tab.url ?? sender.url) !== word) return { status: "inactive" };
       return { status: await captureWord(state, word, message.verification) };
     }
 

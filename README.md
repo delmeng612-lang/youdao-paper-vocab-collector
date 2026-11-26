@@ -4,7 +4,9 @@
 
 A Chrome and Edge extension that verifies English words and phrases against Youdao Dictionary, organizes them by research paper, and exports vocabulary as TXT for review.
 
-**当前版本** `1.4.0` · **授权** [MIT](LICENSE) · [隐私与权限](PRIVACY.md) · [更新记录](CHANGELOG.md)
+**当前版本** `1.4.1` · **授权** [MIT](LICENSE) · [隐私与权限](PRIVACY.md) · [更新记录](CHANGELOG.md)
+
+**第一次使用？** [看图操作：从下载安装到导出 TXT](GUIDE.md)
 
 在 Zotero 阅读 PDF 时，先指定当前文献，再照常把生词或短语复制到有道词典网页查询。扩展核对查询词与有道词典的词条标题和简明释义：两者都匹配时自动加入可导出的词表；有道明确提示未找到时不收录。只有页面无法核实或该词已在其他文献收录时，才进入待确认列表。所有记录只存放在本机浏览器的扩展存储中。
 

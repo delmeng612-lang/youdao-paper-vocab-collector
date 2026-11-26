@@ -40,15 +40,16 @@ const fetchPage = async (url) => {
 vm.runInNewContext(background, { chrome, URL, crypto, console, fetch: fetchPage, AbortController, setTimeout, clearTimeout });
 
 const send = (type, payload = {}, sender = {}) => new Promise((resolve) => onMessage({ type, ...payload }, sender, resolve));
-const query = (word, verification) => {
+const query = (word, verification, senderUrl) => {
   const url = `https://youdao.com/result?word=${encodeURIComponent(word)}&lang=en`;
-  return send("CAPTURE_WORD", { word, verification }, { tab: { id: 1 }, url });
+  return send("CAPTURE_WORD", { word, verification }, { tab: { id: 1, url }, frameId: 0, url: senderUrl ?? url });
 };
 const contents = () => decodeURIComponent(download.url.split(",", 2)[1]);
 
 let result = await send("START_PAPER", { title: "Paper A" });
 const paperA = result.data.activePaperId;
-result = await query("imputation", "valid");
+assert.equal((await query("imputation", "valid", "https://example.test/")).data.status, "inactive");
+result = await query("imputation", "valid", "https://youdao.com/");
 assert.equal(result.data.status, "collected");
 assert.equal((await query("imputation", "valid")).data.status, "approved");
 assert.equal((await query("imputatoin", "invalid")).data.status, "invalid");
