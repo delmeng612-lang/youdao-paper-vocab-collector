@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+*.pem
+*.crx
+*.zip
+*.log
+backups/
+exports/
+文献生词-完整备份*.json
+文献单词-*.txt
+文献全部词条-*.txt
+youdao-vocabulary-*
+youdao-before-*.json
+Thumbs.db
+.DS_Store

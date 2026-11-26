@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "有道文献生词收集器",
+  "version": "1.4.0",
+  "description": "自动核对有道词典释义，按文献收集英文词条并导出 TXT。",
+  "permissions": ["storage", "downloads"],
+  "host_permissions": ["https://youdao.com/*", "https://dict.youdao.com/*", "https://www.youdao.com/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://youdao.com/*", "https://dict.youdao.com/*", "https://www.youdao.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": { "default_popup": "popup.html", "default_title": "文献生词收集器" }
+}

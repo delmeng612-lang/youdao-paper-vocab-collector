@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文献生词收集器</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>文献生词收集器 <small id="buildVersion"></small></h1>
+        <p>在 Zotero 阅读，去有道词典查词；核对到对应释义后自动收录，误拼不会进入词表。</p>
+      </header>
+
+      <form id="newPaperForm">
+        <label for="paperTitle">开始阅读新文献</label>
+        <div class="row">
+          <input id="paperTitle" type="text" maxlength="180" placeholder="输入文献标题" required>
+          <button type="submit">开始</button>
+        </div>
+      </form>
+
+      <section class="current">
+        <label for="paperSelect">当前文献</label>
+        <select id="paperSelect"></select>
+        <div class="row status-row">
+          <span id="statusText">正在读取…</span>
+          <button id="pauseButton" type="button" class="secondary">暂停收集</button>
+        </div>
+        <button id="captureCurrent" type="button" class="secondary capture-current">检查当前有道结果页</button>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>待确认 <span id="pendingCount">0</span></h2>
+          <span class="section-note">跨文献重复或无法核实时</span>
+        </div>
+        <ul id="pendingList" class="entry-list"></ul>
+        <p id="pendingHint" class="empty-hint">暂无需要手动处理的词条。</p>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>已确认词条 <span id="paperCount">0</span></h2>
+          <span id="allCount">累计 0</span>
+        </div>
+        <ul id="wordList" class="entry-list"></ul>
+        <p id="emptyHint" class="empty-hint">暂无已确认词条。</p>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>已忽略 <span id="ignoredCount">0</span></h2>
+          <span class="section-note">再次查询也不会加入</span>
+        </div>
+        <ul id="ignoredList" class="entry-list"></ul>
+        <p id="ignoredHint" class="empty-hint">暂无已忽略词条。</p>
+      </section>
+
+      <div class="exports">
+        <button id="exportPaper" type="button">本篇单词 TXT</button>
+        <button id="exportAll" type="button" class="secondary">累计单词 TXT</button>
+      </div>
+      <div class="exports entry-exports">
+        <button id="exportEntriesPaper" type="button" class="secondary">本篇全部词条 TXT</button>
+        <button id="exportEntriesAll" type="button" class="secondary">累计全部词条 TXT</button>
+      </div>
+      <div class="exports backup-actions">
+        <button id="exportBackup" type="button" class="secondary">备份完整记录</button>
+        <button id="chooseBackup" type="button" class="secondary">导入备份 JSON</button>
+        <input id="importBackup" type="file" accept=".json,application/json" hidden>
+      </div>
+      <p id="message" role="status" aria-live="polite"></p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
